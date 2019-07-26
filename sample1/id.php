@@ -1,7 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 <?php
 //データベース接続設定
 $dbServer = '127.0.0.1';
-$dbName = 'sample1';
+$dbName = 'yabukib';
 $dsn = "mysql:host={$dbServer};dbname={$dbName};charset=utf8";
 $dbUser = 'test';
 $dbPass = 'pass';
@@ -9,20 +18,20 @@ $dbPass = 'pass';
 //データベースへの接続
 $db = new PDO($dsn, $dbUser, $dbPass);
 
-//クエリパラメータの取得
-$id = $_GET['foo'];
 
-//検索実行
-$sql = 'SELECT * FROM members WHERE id = :id';
+//クエリパラメータの取得
+$id = $_GET['id'];
+
+$sql = 'SELECT * FROM logintable where $user = id';
 $prepare = $db->prepare($sql);
-$prepare->bindValue(':id', $id, PDO::PARAM_INT);
 $prepare->execute();
 $result = $prepare->fetchAll(PDO::FETCH_ASSOC);
 
 //結果の出力
-foreach ($result as $person) {
-  echo $person['id'];
-  echo ',';
-  echo $person['name'];//手抜き
-  echo "<br/>";
-}
+foreach ($result as $user) {
+    echo $user['id'];
+    echo "<br/>";
+  }
+?>
+</body>
+</html>
